@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>bug记录</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <!--[if IE]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if IE 6]>
+    <script src="js/belatedPNG.js"></script>
+    <script>
+        DD_belatedPNG.fix('*');
+    </script>
+
+    <![endif]-->
+    <script type="application/javascript" th:src="@{/js/jquery-1.4.min.js}"></script>
+    <script type="application/javascript" th:src="@{/myjs/user.js}"></script>
+    <script type="application/javascript">
+        function addBug() {
+            var uname=$("#un").val();
+            if(uname==""||uname==null){
+                alert("请先登录!!")
+                return;
+            }
+            var bname=$("#author").val();
+            var bcontext=$("#comment").val();
+            var data={bname:bname,bcontext:bcontext};
+            $.ajax({
+                url: "/logs/addLogs",
+                data: data,
+                type: "POST",
+                dataType: "json",
+                async: true, //设为false就是同步请求
+                success: function (res) {
+                    alert(res);
+                },
+                error: function (msg) {
+                    // com.showAlert(com.error, msg);
+                    console.log(msg);
+                    if (failCallback) {
+                        failCallback(msg);
+                    }
+                }
+            });
+        }
+    </script>
+
+
+</head>
+<body>
+<section id="page">
+    <div id="pagewrap">
+        <section id="sidebar">
+            <h2>分类</h2>
+            <ul>
+                <li><a href="#">bug记录</a></li>
+                <!--<li><a href="#">Graphics Design</a></li>
+                <li><a href="#">Music</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">Entertainment</a></li>
+                <li><a href="#">School</a></li>-->
+            </ul>
+
+            <!--<h2>Blogroll</h2>
+            <ul>
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Graphics Design</a></li>
+            <li><a href="#">Music</a></li>
+            <li><a href="#">Movies</a></li>
+            <li><a href="#">Entertainment</a></li>
+            <li><a href="#">School</a></li>
+            </ul>-->
+        </section>
+        <section id="contents">
+
+            <header id="mainheader">
+
+                <h1>bug记录</h1>
+            </header>
+
+
+            <section id="main">
+                <article class="post">
+                    <header>
+                        <h2>bug信息</h2>
+                    </header>
+                    <section class="entry">
+                            <p class="textfield">
+                                <label for="author">
+                                    <small>bug标题(部分内容):</small>
+                                </label>
+                                <input name="author" id="author"  size="22" tabindex="1" type="text">
+                            </p>
+                            <p>
+                                <small><strong>bug详细内容:</strong></small>
+                            </p>
+                            <p class="text-area">
+                                <textarea name="comment" id="comment" cols="50" rows="10" tabindex="4"></textarea>
+                            </p>
+                            <p>
+                                <input name="submit" id="submit" tabindex="5" type="image" th:src="@{/images/submit.png}" onclick="addBug()"/>
+                                <input name="comment_post_ID" id="un" th:value="${session.uname}" type="hidden">
+                            </p>
+                            <div class="clear"></div>
+                        <div class="clear"></div>
+                    </section>
+                </article>
+
+
+            </section>
+            <footer id="pagefooter">
+                <div class="footerwrap">
+                    <p class="siteinfo">
+
+                        2010 &copy; All Rights Reserved | Your Website Info and copyright information goes here.
+                    </p>
+                </div>
+                <div id="credits">
+                    <a href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a> collect from www.cssmoban.com</div>
+
+
+            </footer>
+        </section>
+        <section id="social">
+            <div id="socialwrap">
+
+
+                <nav id="mainnav">
+                    <h2>日志记录</h2>
+
+                    <ul>
+
+                        <li><a href="/logs/querAll">首页</a></li>
+                        <li class="current"><a href="#">添加bug</a></li>
+                    </ul>
+                </nav>
+
+
+                <section id="tweets">
+                    <h2 th:if="${session.uname==null}">登录 || 注册</h2>
+
+                    <h2 th:if="${session.uname!=null}"><a href="/users/exit">注销登录</a></h2>
+                    <ul>
+                        <li class="firsttwt" th:if="${session.uname==null}">
+                            用户名:<input type="text" id="uname" value="" size="10"/><br />
+                            密码:<input type="password" id="pwd" value="" size="10"/><br />
+                            <input type="button" value="登录" onclick="login('addbug')"/>
+
+                        </li>
+
+                        <li class="firsttwt" th:if="${session.uname!=null}">
+                            欢迎用户:<span th:text="${session.uname}"></span>
+                        </li>
+                        <li th:if="${session.uname==null}">
+                            用户名:<input type="text" name="userName" id="userName" value="" size="10"/><br />
+                            密码:<input type="text" name="password" id="password" value="" size="10"/><br />
+                            性别:<input name="sex" type="radio" value="男" size="10"/>男
+                            <input name="sex" type="radio" value="女" size="10"/>女<br />
+                            居住地址<input type="text" id="city" name="city" value="" size="10"/><br />
+                            <input type="button" value="注册" onclick="add()"/>
+                        </li>
+                    </ul>
+                </section>
+
+                <div class="clear"></div>
+            </div>
+        </section>
+
+</body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>首页</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
+    <script type="application/javascript" th:src="@{/js/jquery-1.4.min.js}"></script>
+    <script type="application/javascript" th:src="@{/myjs/user.js}"></script>
+    <script type="application/javascript">
+        function del(id) {
+
+            if(confirm("是否删除")){
+                var data={bid:id};
+                $.ajax({
+                    url: "/logs/deleteBugs",
+                    data: data,
+                    type: "POST",
+                    dataType: "json",
+                    async: true, //设为false就是同步请求
+                    success: function (res) {
+                        if(res>0){
+                            alert("删除成功");
+                            window.location.href="/";
+                        }else{
+                            alert("删除失败");
+                        }
+                    },
+                    error: function (msg) {
+                        com.showAlert(com.error, msg);
+                        console.log(msg);
+                        if (failCallback) {
+                            failCallback(msg);
+                        }
+                    }
+                });
+            }
+
+        }
+    </script>
+</head>
+<body>
+<script type="application/javascript" th:if="${logs}==null">window.location="/logs/querAll?pages=1";</script>
+<section id="page">
+   <!-- <img th:src="@{/images/hd-browse.png}"/>-->
+    <div id="pagewrap">
+        <section id="sidebar" >
+            <h2>分类</h2>
+            <ul>
+                <li><a href="#">bug记录</a></li>
+                <!--<li><a href="#">Graphics Design</a></li>
+                <li><a href="#">Music</a></li>
+                <li><a href="#">Movies</a></li>
+                <li><a href="#">Entertainment</a></li>
+                <li><a href="#">School</a></li>-->
+            </ul>
+
+            <!--<h2>Blogroll</h2>
+            <ul>
+            <li><a href="#">Web Design</a></li>
+            <li><a href="#">Graphics Design</a></li>
+            <li><a href="#">Music</a></li>
+            <li><a href="#">Movies</a></li>
+            <li><a href="#">Entertainment</a></li>
+            <li><a href="#">School</a></li>
+            </ul>-->
+        </section>
+        <section id="contents">
+
+            <header id="mainheader">
+
+                <h1>首页</h1>
+               <form action="/logs/selectByBname?pages=0" method="post">
+                   <input type="text" name="context"/>&nbsp;&nbsp;&nbsp;
+                   <input type="submit" value="搜索"/>
+               </form>
+            </header>
+
+
+            <section id="main">
+                <article class="post" th:each="logs:${logs}">
+                    <header>
+                        <h2 ><a th:href="@{/logs/selectByBid(bid=${logs.bid})}" th:text="${logs.bname}"></a></h2>
+                        <p class="postinfo"><span th:text="${logs.userName}"></span>| <time th:text="${#dates.format(logs.createTime,'yyyy-MM-dd')}"></time>
+                            <span  th:if="${logs.userName} eq ${session.uname}">|<button th:onclick="'javascript:del('+${logs.bid}+');'"  style="border: none; background-color: #F7F5F0;font-size:1.1em;">删除</button></span>
+                        </p>
+                    </header>
+                    <section class="entry">
+
+                        <p th:text="${logs.bcontext}" style="overflow: hidden;text-overflow:ellipsis;white-space: nowrap; width: 300px ;display: block;">部分内容</a></p>
+
+                    </section>
+                </article>
+                <div class="wp-pagenavi" th:object="${testpage}">
+
+
+                   <!--<span th:text="*{beginPage==null}">1</span>-->
+
+                    <!--<span id="index" th:each="i : ${#numbers.sequence(testpage.beginPage,testpage.endPage)}">-->
+                       <!--&lt;!&ndash; <a th:if="${type}==1" th:text="${i}" th:href="@{/logs/selectByBname(pages=${i})}"></a>-->
+                    <a  th:each="i : *{#numbers.sequence(beginPage,endPage)}" th:if="${type}==0" th:text="${i}" th:href="@{/logs/querAll(pages=${i})}"></a>
+                   <a  th:each="i : *{#numbers.sequence(beginPage,endPage)}" th:if="${type}==1" th:text="${i}" th:href="@{/logs/selectByBname(pages=${i},context='')}"></a>
+                    <!--</span>-->
+                </div>
+                <div class="clear"></div>
+
+
+            </section>
+            <footer id="pagefooter">
+                <div class="footerwrap">
+                    <p class="siteinfo">
+
+                        2010 &copy; All Rights Reserved | Your Website Info and copyright information goes here.
+                    </p>
+                </div>
+                <div id="credits">
+                    <a href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a> collect from www.cssmoban.com</div>
+
+
+            </footer>
+        </section>
+        <section id="social">
+            <div id="socialwrap">
+
+
+                <nav id="mainnav">
+                    <h2>日志记录</h2>
+
+                    <ul>
+
+                        <li class="current"><a href="/logs/querAll?pages=1">首页</a></li>
+                        <!--    <li><a href="page.html">About</a></i>
+                            <li><a href="single.html">Styles</a></li>-->
+                        <li><a href="/logs/addBug.html">添加bug</a></li>
+                    </ul>
+                </nav>
+
+                <section id="tweets">
+                    <h2 th:if="${session.uname==null}">登录 || 注册</h2>
+
+                    <h2 th:if="${session.uname!=null}"><a href="/users/exit">注销登录</a></h2>
+                    <ul>
+                        <li class="firsttwt" th:if="${session.uname==null}">
+                            用户名:<input type="text" id="uname" value="" size="10"/><br />
+                            密码:<input type="password" id="pwd" value="" size="10"/><br />
+                            <input type="button" value="登录" onclick="login('index')"/>
+
+                        </li>
+
+                        <li class="firsttwt" th:if="${session.uname!=null}">
+                            欢迎用户:<span th:text="${session.uname}"></span>
+                        </li>
+                        <li th:if="${session.uname==null}">
+                            用户名:<input type="text" name="userName" id="userName" value="" size="10"/><br />
+                            密码:<input type="text" name="password" id="password" value="" size="10"/><br />
+                            性别:<input name="sex" type="radio" value="男" size="10"/>男
+                            <input name="sex" type="radio" value="女" size="10"/>女<br />
+                            居住地址<input type="text" id="city" name="city" value="" size="10"/><br />
+                            <input type="button" value="注册" onclick="add()"/>
+                        </li>
+                    </ul>
+                </section>
+                <!--<section id="sociallinks">
+                <h2>Social</h2>
+                <a href="#"><img src="images/socialicons/facebook.png" width="32" height="32" alt="fb"></a> <a href="#"><img src="images/socialicons/twitter.png" width="32" height="32" alt="twitter"></a><a href="#"><img src="images/socialicons/digg.png" width="32" height="32" alt="digg"></a><a href="#"><img src="images/socialicons/technorati.png" width="32" height="32" alt="technorati"></a><a href="#"><img src="images/socialicons/youtube.png" width="32" height="32" alt="youtube"></a><a href="#"><img src="images/socialicons/reddit.png" width="32" height="32" alt="reddit"></a><a href="#"><img src="images/socialicons/flickr.png" width="32" height="32" alt="flickr"></a><a href="#"><img src="images/socialicons/rss.png" width="32" height="32" alt="rss"></a></section>
+                </div>
+                </section>-->
+
+                <div class="clear"></div>
+            </div>
+        </section>
+
+</body>
+</html>

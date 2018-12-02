@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>License</title>
+    <style>
+        html {background:#fff; height:100%; width:100%;}
+        body {background:#f4f4f4; width:500px; margin:25px auto 25px; text-align:center; display:block; border:solid 1px #ccc; font:normal 14px "Trebuchet MS", Arial, Helvetica, sans-serif; line-height:22px; padding:50px;}
+        a {color:#F60;}
+    </style>
+
+</head>
+<body>
+<div th:object="${xxnr}">
+    <p th:text="*{bname}"> GNU GENERAL PUBLIC LICENSE<br />
+        Version 3, 29 June 2007</p>
+    <p style='width: 488px;display:block;word-break: break-all;word-wrap: break-word;'  th:text="*{bcontext}"> Copyright (C) 2007 Free Software Foundation, Inc. &lt;http://fsf.org/&gt;<br />
+        Everyone is permitted to copy and distribute verbatim copies<br />
+        of this license document, but changing it is not allowed.</p>
+</div>
+
+<a href="/logs/querAll">返回首页</a>
+</body>
+</html>
