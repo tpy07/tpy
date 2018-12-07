@@ -31,4 +31,11 @@ public interface BookService {
      * @return
      */
     public Object[] querAll(int page);
+
+    /**
+     * 添加书籍
+     * @param book
+     * @return
+     */
+    public int addBook(Books book);
 }

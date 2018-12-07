@@ -46,10 +46,7 @@
             </span></div>
             <c:forEach items="${requestScope.list[0]}" var="book">
             <div class="feat_prod_box">
-
-                <div class="prod_img"><a href="details.jsp"><img src="../style/images/prod1.gif" alt="" title="" border="0" /></a></div>
-
-
+                <div class="prod_img"><a href="selectByBid.action?bid=${book.bid}"><img style="width: 98px;height: 150px;" src="${book.bookImage}" alt="" title="" border="0" /></a></div>
                 <div class="prod_det_box">
                     <div class="box_top"></div>
                     <div class="box_center">
@@ -75,7 +72,7 @@
                     <a href="details.jsp">${newBook.bookName}</a>
                     <div class="new_prod_bg">
                         <span class="new_icon"><img src="../style/images/new_icon.gif" alt="" title="" /></span>
-                        <a href="details.jsp"><img src="../style/images/thumb2.gif" alt="" title="" class="thumb" border="0" /></a>
+                        <a href="selectByBid.action?bid=${book.bid}"><img style="width: 60px;height: 100px;" src="${newBook.bookImage}" alt="" title="" class="thumb" border="0" /></a>
                     </div>
                 </div>
                 </c:forEach>

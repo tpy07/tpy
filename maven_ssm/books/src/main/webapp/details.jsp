@@ -47,7 +47,7 @@
 
             <div class="feat_prod_box_details">
 
-                <div class="prod_img"><a href="selectByBid.action?bid=${param.bid}"><img src="../style/images/prod1.gif" alt="" title="" border="0" /></a>
+                <div class="prod_img"><a href="selectByBid.action?bid=${param.bid}"><img style="width: 98px;height: 150px;" src="${requestScope.book.bookImage}" alt="" title="" border="0" /></a>
                     <br /><br />
                 </div>
 

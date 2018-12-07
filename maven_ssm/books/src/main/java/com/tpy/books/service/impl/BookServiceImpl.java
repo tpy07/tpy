@@ -58,6 +58,10 @@ public class BookServiceImpl implements BookService {
     public Object[] querAll(int page) {
         try {
             List<Books> list=bookDao.querAll((page-1)*12);
+            for (Books b:
+                 list) {
+                System.out.println(b.getBookImage());
+            }
             PageBean pagebean=new PageBean(page,bookDao.selectSum(),12);
             Object[] obj=new Object[2];
             obj[0]=list;
@@ -66,6 +70,18 @@ public class BookServiceImpl implements BookService {
         }catch (Exception e){
             e.printStackTrace();
             return null;
+        }
+
+    }
+
+    @Override
+    public int addBook(Books book) {
+        try {
+            bookDao.addBook(book);
+            return 1;
+        }catch (Exception e){
+            e.printStackTrace();
+            return -1;
         }
 
     }

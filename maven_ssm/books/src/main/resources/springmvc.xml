@@ -39,8 +39,14 @@
 			<!--</list>-->
 		<!--</property>-->
 	<!--</bean>-->
-	<!-- 文件上传解析器 -->
+	<!-- 配置文件上传 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 设置上传文件大小 -->
+		<property name="defaultEncoding" value="utf-8"></property>
+		<!-- 设置内存大小 -->
+		<property name="maxInMemorySize" value="10240"></property>
+		<!-- 设置最大值上传文件大小，-1为不限制 -->
+		<property name="maxUploadSize" value="-1"></property>
 	</bean>
 	<!---->
 	<!--注解适配器 -->

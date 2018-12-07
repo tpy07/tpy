@@ -53,4 +53,12 @@ public interface BookDao {
             @Result(column="uid",property = "uid",one = @One(select="com.tpy.books.dao.UserDao.selectByUid",fetchType= FetchType.EAGER))
     })
     public List<Books> querAll(@Param("page")int page);
+
+    /**
+     * 添加书籍
+     * @param book
+     */
+    @Insert("insert into book(bookName,uid,bookPrice,bookContext,bookImage) values(#{bookName},#{uid.uid},#{bookPrice},#{bookContext},#{bookImage})")
+    @Options(useGeneratedKeys = true,keyProperty = "bid")
+    public void addBook(Books book);
 }

@@ -47,7 +47,7 @@
                 <div class="new_prod_box">
                     <a href="selectByBid.action?bid=${book.bid}">${book.bookName}</a>
                     <div class="new_prod_bg">
-                        <a href="selectByBid.action?bid=${book.bid}"><img src="../style/images/thumb1.gif" alt="" title="" class="thumb" border="0" /></a>
+                        <a href="selectByBid.action?bid=${book.bid}"><img style="width: 60px;height: 100px;" src="${book.bookImage}" alt="" title="" class="thumb" border="0" /></a>
                     </div>
 
                 </div>
