@@ -29,7 +29,7 @@ public class LogsAction {
     @RequestMapping("/querAll")
     public String querAll(@RequestParam(value = "pages",defaultValue = "1") Integer pages){
         List<Logs> list =logsService.querAll(pages);
-        PageBean page= new PageBean(null,pages,logsService.selectBySum(null),3);
+        PageBean page= new PageBean(list,pages,logsService.selectBySum(null),3);
         req.setAttribute("logs",list);
         req.setAttribute("testpage",page);
         req.setAttribute("type",0);

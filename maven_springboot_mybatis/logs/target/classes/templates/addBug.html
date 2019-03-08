@@ -33,7 +33,12 @@
                 dataType: "json",
                 async: true, //设为false就是同步请求
                 success: function (res) {
-                    alert(res);
+                    if(res>0){
+                        alert("添加成功");
+                        window.location="/logs/querAll?pages=1";
+                    }else{
+                        alert("添加失败");
+                    }
                 },
                 error: function (msg) {
                     // com.showAlert(com.error, msg);
@@ -157,7 +162,6 @@
                             密码:<input type="text" name="password" id="password" value="" size="10"/><br />
                             性别:<input name="sex" type="radio" value="男" size="10"/>男
                             <input name="sex" type="radio" value="女" size="10"/>女<br />
-                            居住地址<input type="text" id="city" name="city" value="" size="10"/><br />
                             <input type="button" value="注册" onclick="add()"/>
                         </li>
                     </ul>

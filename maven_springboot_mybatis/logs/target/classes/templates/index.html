@@ -97,8 +97,8 @@
 
                     <!--<span id="index" th:each="i : ${#numbers.sequence(testpage.beginPage,testpage.endPage)}">-->
                        <!--&lt;!&ndash; <a th:if="${type}==1" th:text="${i}" th:href="@{/logs/selectByBname(pages=${i})}"></a>-->
-                    <a  th:each="i : *{#numbers.sequence(beginPage,endPage)}" th:if="${type}==0" th:text="${i}" th:href="@{/logs/querAll(pages=${i})}"></a>
-                   <a  th:each="i : *{#numbers.sequence(beginPage,endPage)}" th:if="${type}==1" th:text="${i}" th:href="@{/logs/selectByBname(pages=${i},context='')}"></a>
+                    <a  th:each="i : *{#numbers.sequence(beginPage,endPage)}" th:if="${type}==0 and ${i}>0" th:text="${i}" th:href="@{/logs/querAll(pages=${i})}"></a>
+                   <a  th:each="i : *{#numbers.sequence(beginPage,endPage)}" th:if="${type}==1 and ${i}>0" th:text="${i}" th:href="@{/logs/selectByBname(pages=${i},context='')}"></a>
                     <!--</span>-->
                 </div>
                 <div class="clear"></div>
@@ -113,9 +113,6 @@
                     </p>
                 </div>
                 <div id="credits">
-                    <a href="http://www.cssmoban.com/" title="网站模板" target="_blank">网站模板</a> collect from www.cssmoban.com</div>
-
-
             </footer>
         </section>
         <section id="social">
@@ -154,7 +151,6 @@
                             密码:<input type="text" name="password" id="password" value="" size="10"/><br />
                             性别:<input name="sex" type="radio" value="男" size="10"/>男
                             <input name="sex" type="radio" value="女" size="10"/>女<br />
-                            居住地址<input type="text" id="city" name="city" value="" size="10"/><br />
                             <input type="button" value="注册" onclick="add()"/>
                         </li>
                     </ul>

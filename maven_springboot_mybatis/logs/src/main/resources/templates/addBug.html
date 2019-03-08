@@ -33,7 +33,12 @@
                 dataType: "json",
                 async: true, //设为false就是同步请求
                 success: function (res) {
-                    alert(res);
+                    if(res>0){
+                        alert("添加成功");
+                        window.location="/logs/querAll?pages=1";
+                    }else{
+                        alert("添加失败");
+                    }
                 },
                 error: function (msg) {
                     // com.showAlert(com.error, msg);

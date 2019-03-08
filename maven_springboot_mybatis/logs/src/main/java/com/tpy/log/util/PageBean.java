@@ -1,10 +1,12 @@
 package com.tpy.log.util;
 
+import com.tpy.log.model.Logs;
+
 import java.util.List;
 
 
 public class PageBean {
-	private List<Object> records;//某一张表的数据
+	private List<Logs> records;//某一张表的数据
 	private int currentPage;//当前页
 	private int totalPage;//总条数
 	private int pageSize;//每页显示的数据
@@ -15,7 +17,7 @@ public class PageBean {
 	private int beginPage;//第一个显示的页码
 	private int endPage;//最后显示的页码
 	public PageBean(){};
-	public PageBean(List<Object> records, int currentPage, int total, int pageSize) {
+	public PageBean(List<Logs> records, int currentPage, int total, int pageSize) {
 		this.records = records;
 		this.currentPage = currentPage>endPage?1:currentPage;
 		this.totalPage = total;
@@ -24,10 +26,10 @@ public class PageBean {
 		pre=currentPage-1<=0?currentPage:currentPage-1;//计算上一页
 		next=currentPage+1>lastPage?lastPage:currentPage+1;//计算下一页
 		//如果页码不足10页则全部显示
-		if(lastPage<=10){
+		if(lastPage<=10&&lastPage>0){
 			beginPage=1;
 			endPage=lastPage;
-		}else{//如果大于10，则显示前四后五
+		}else if(lastPage>10){//如果大于10，则显示前四后五
 			beginPage=currentPage-4;//第一个显示的页码是当前页的前四页
 			endPage=currentPage+5;//最后一个显示的页码是当前页的后五页
 			//如果当前页往前不足四个则显示前10个
@@ -40,10 +42,10 @@ public class PageBean {
 			}
 		}
 	}
-	public List<Object> getRecords() {
+	public List<Logs> getRecords() {
 		return records;
 	}
-	public void setRecords(List<Object> records) {
+	public void setRecords(List<Logs> records) {
 		this.records = records;
 	}
 	public int getCurrentPage() {

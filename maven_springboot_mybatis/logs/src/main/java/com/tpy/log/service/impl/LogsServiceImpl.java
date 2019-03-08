@@ -8,8 +8,10 @@ import com.tpy.log.service.UserService;
 import com.tpy.log.util.PageBean;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 @Service
 public class LogsServiceImpl implements LogsService {
@@ -58,5 +60,15 @@ public class LogsServiceImpl implements LogsService {
     public int delete(Logs logs) {
         int i=logsDao.delete(logs);
         return i;
+    }
+
+    /**
+     * 定时任务
+     * cron表达式配置的完整格式: 秒 分 时 日 月 周 年;如:0 0 12 * * ? 2018(2018年每天12:00执行)
+     * @Scheduled只能支持六位不支持七位所以年需要省略掉 秒 分 时 日 月 周 如:0 0 12 * * ?
+     */
+    @Scheduled(cron = "0 00 00 * * ?")
+    public void runTask(){
+        System.out.println("定时任务!!");
     }
 }
