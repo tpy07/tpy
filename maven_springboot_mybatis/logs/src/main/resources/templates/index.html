@@ -7,8 +7,8 @@
     <script type="application/javascript" th:src="@{/js/jquery-1.4.min.js}"></script>
     <script type="application/javascript" th:src="@{/myjs/user.js}"></script>
     <script type="application/javascript">
-        function del(id) {
-
+        function del(e) {
+            var id=e.name;
             if(confirm("是否删除")){
                 var data={bid:id};
                 $.ajax({
@@ -81,7 +81,7 @@
                     <header>
                         <h2 ><a th:href="@{/logs/selectByBid(bid=${logs.bid})}" th:text="${logs.bname}"></a></h2>
                         <p class="postinfo"><span th:text="${logs.userName}"></span>| <time th:text="${#dates.format(logs.createTime,'yyyy-MM-dd')}"></time>
-                            <span  th:if="${logs.userName} eq ${session.uname}">|<button th:onclick="'javascript:del('+${logs.bid}+');'"  style="border: none; background-color: #F7F5F0;font-size:1.1em;">删除</button></span>
+                            <span   th:if="${logs.userName} eq ${session.uname}">|<button th:name="${logs.bid}" th:onclick="'javascript:del(this);'"  style="border: none; background-color: #F7F5F0;font-size:1.1em;">删除</button></span>
                         </p>
                     </header>
                     <section class="entry">

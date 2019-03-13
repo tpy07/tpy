@@ -10,6 +10,8 @@ import java.util.List;
 
 @Mapper
 public interface LogsDao {
+    @Select("select * from bugs")
+    public List<Logs> selectAll();
     /**
      * 查询所有
      * @return
@@ -36,7 +38,7 @@ public interface LogsDao {
      * @param log
      * @return
      */
-    @Insert("insert into bugs(bname,bcontext,userName) values(#{bname},#{bcontext},#{userName})")
+    @Insert("insert into bugs(bname,bcontext,userName,filePath) values(#{bname},#{bcontext},#{userName},#{filePath})")
     @Options(useGeneratedKeys = true,keyProperty = "bid")
     public int addLogs(Logs log);
 

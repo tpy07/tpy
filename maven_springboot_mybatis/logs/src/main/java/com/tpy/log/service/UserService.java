@@ -7,5 +7,5 @@ import java.util.List;
 public interface UserService {
     public int selectByUserNameAndPwd(Users user);
     public int add(Users user);
-    public int selectByUserName(Users user);
+    public String selectByUserName(Users user);
 }

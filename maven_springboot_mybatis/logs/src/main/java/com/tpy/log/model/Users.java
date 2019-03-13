@@ -3,19 +3,19 @@ package com.tpy.log.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class Users implements Serializable {
-    private int uid;
+public class Users  {
+    private String uid;
     private String userName;
     private String password;
-    private char sex;
+    private String sex;
     private String city;
     private Date createTime;
 
-    public int getUid() {
+    public String getUid() {
         return uid;
     }
 
-    public void setUid(int uid) {
+    public void setUid(String uid) {
         this.uid = uid;
     }
 
@@ -35,11 +35,11 @@ public class Users implements Serializable {
         this.password = password;
     }
 
-    public char getSex() {
+    public String getSex() {
         return sex;
     }
 
-    public void setSex(char sex) {
+    public void setSex(String sex) {
         this.sex = sex;
     }
 

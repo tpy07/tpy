@@ -5,15 +5,19 @@ import com.tpy.log.service.LogsService;
 import com.tpy.log.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ResourceUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import sun.rmi.runtime.Log;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.util.List;
 
 @Controller
@@ -56,11 +60,27 @@ public class LogsAction {
     }
     @RequestMapping(value = "/addLogs",method = RequestMethod.POST)
     @ResponseBody
-    public int addLogs(Logs logs){
+    public int addLogs(Logs logs,HttpServletRequest request,@RequestParam("files") MultipartFile file){
         String userName=session.getAttribute("uname").toString();
-        logs.setUserName(userName);
-        int i=logsService.addlogs(logs);
-        return i;
+     /*   if (multipartRequest.isEmpty()) {
+            return -2;
+        }*/                System.out.println(file.getOriginalFilename());
+        try {
+          /*  for (MultipartFile file:filelist){
+            }*/
+   /*         logs.setFilePath(fileName);
+            //获取跟目录
+            File path = new File(ResourceUtils.getURL("classpath:").getPath());
+            if(!path.exists()) path = new File("");
+            System.out.println("path:"+path.getAbsolutePath());
+            File dest = new File(path.getAbsolutePath()+ "/upload/image/" + fileName);
+            multipartRequest.transferTo(dest);*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        /*logs.setUserName(userName);
+        int i=logsService.addlogs(logs);*/
+        return 0;
     }
     @RequestMapping("addBug.html")
     public String pageAddBug(){

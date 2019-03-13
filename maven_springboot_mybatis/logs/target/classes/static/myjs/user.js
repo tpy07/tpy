@@ -75,7 +75,6 @@ function add(){
             alert(res);
         },
         error: function (msg) {
-            com.showAlert(com.error, msg);
             console.log(msg);
             if (failCallback) {
                 failCallback(msg);

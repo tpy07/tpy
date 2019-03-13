@@ -1,6 +1,8 @@
 package com.tpy.log.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.tpy.log.dao.LogsDao;
+import com.tpy.log.dao.LogsDao_redis;
 import com.tpy.log.model.Logs;
 import com.tpy.log.model.Users;
 import com.tpy.log.service.LogsService;
@@ -8,19 +10,26 @@ import com.tpy.log.service.UserService;
 import com.tpy.log.util.PageBean;
 import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.DefaultTypedTuple;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+
 @Service
 public class LogsServiceImpl implements LogsService {
     @Autowired
     private LogsDao logsDao;
     @Override
     public List<Logs> querAll(int pages) {
-        List<Logs> list=logsDao.querAll((pages-1)*3);
-
+        List<Logs> list=querAllRedis((pages-1)*3);
+        if(list==null||list.size()<=0){
+            System.out.println("数据库查询");
+            list=logsDao.querAll((pages-1));
+            addRedis(logsDao.selectAll());
+        }
         return list;
     }
 
@@ -30,6 +39,11 @@ public class LogsServiceImpl implements LogsService {
             return -1;
         }
         int i=logsDao.addLogs(logs);
+        if(i>0){
+            List<Logs> list=new ArrayList<Logs>();
+            list.add(logs);
+            addRedis(list);
+        }
         return i;
     }
 
@@ -40,7 +54,6 @@ public class LogsServiceImpl implements LogsService {
 
     @Override
     public int selectBySum(Logs logs) {
-        System.out.println(logs==null);
         try {
             int sum=logsDao.selectSum(logs);
             System.out.println("总数====="+sum);
@@ -59,6 +72,9 @@ public class LogsServiceImpl implements LogsService {
     @Override
     public int delete(Logs logs) {
         int i=logsDao.delete(logs);
+        if(i>0){
+            delRedis("LOGS_TABLE");
+        }
         return i;
     }
 
@@ -70,5 +86,29 @@ public class LogsServiceImpl implements LogsService {
     @Scheduled(cron = "0 00 00 * * ?")
     public void runTask(){
         System.out.println("定时任务!!");
+    }
+    @Autowired
+    private StringRedisTemplate redis;
+    public List<Logs> querAllRedis(int page){
+        System.out.println("缓存查询===========");
+        List<Logs> logsList=new ArrayList<Logs>();
+        List<String> list=redis.opsForList().range("LOGS_TABLE",page ,page+2);
+        for (String str:list){
+            Logs log = JSON.toJavaObject(JSON.parseObject(str),Logs.class );
+            logsList.add(log);
+        }
+        return logsList;
+    }
+    public int addRedis(List<Logs> logsList){
+        List<String> list=new ArrayList<String>();
+        for (Logs log:logsList){
+            list.add(JSON.toJSONString(log));
+        }
+        redis.opsForList().rightPushAll("LOGS_TABLE",list);
+        System.out.println("缓存添加成功=============================");
+        return  1;
+    }
+    public boolean delRedis(String table){
+        return redis.delete(table);
     }
 }

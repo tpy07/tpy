@@ -4,17 +4,26 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class Logs implements Serializable {
-    private int bid;
+    private String bid;
     private String bname;
     private String bcontext;
     private String userName;
     private Date createTime;
+    private String filePath;
 
-    public int getBid() {
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getBid() {
         return bid;
     }
 
-    public void setBid(int bid) {
+    public void setBid(String bid) {
         this.bid = bid;
     }
 

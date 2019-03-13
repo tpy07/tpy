@@ -2,6 +2,7 @@
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="multipart/form-data; charset=utf-8" />
     <title>bug记录</title>
     <link th:href="@{/css/style.css}" rel="stylesheet" type="text/css">
     <!--[if IE]>
@@ -25,11 +26,16 @@
             }
             var bname=$("#author").val();
             var bcontext=$("#comment").val();
-            var data={bname:bname,bcontext:bcontext};
+            var file=$("#file").val();
+            var formData = new FormData($("#22")[0]);
+            var data={bname:bname,bcontext:bcontext,file:file};
+            console.log(formData);
             $.ajax({
                 url: "/logs/addLogs",
-                data: data,
+                data: formData,
                 type: "POST",
+                processData: false,
+                contentType: false,
                 dataType: "json",
                 async: true, //设为false就是同步请求
                 success: function (res) {
@@ -90,6 +96,7 @@
                     <header>
                         <h2>bug信息</h2>
                     </header>
+                    <form id="22" enctype="multipart/form-data" onsubmit="return false">
                     <section class="entry">
                             <p class="textfield">
                                 <label for="author">
@@ -109,7 +116,10 @@
                             </p>
                             <div class="clear"></div>
                         <div class="clear"></div>
+                        <input type="file" id="file" name="files">
+
                     </section>
+                    </form>
                 </article>
 
 
@@ -166,10 +176,9 @@
                         </li>
                     </ul>
                 </section>
-
                 <div class="clear"></div>
             </div>
         </section>
-
+    </div>
 </body>
 </html>
