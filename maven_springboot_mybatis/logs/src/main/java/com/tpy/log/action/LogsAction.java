@@ -56,6 +56,7 @@ public class LogsAction {
         req.setAttribute("logs",list);
         req.setAttribute("testpage",page);
         req.setAttribute("type",1);
+        req.setAttribute("context", context);
         return "index";
     }
     @RequestMapping(value = "/addLogs",method = RequestMethod.POST)
@@ -78,9 +79,10 @@ public class LogsAction {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        /*logs.setUserName(userName);
-        int i=logsService.addlogs(logs);*/
-        return 0;
+        logs.setUserName(userName);
+        logs.setClickRcte("0");
+        int i=logsService.addlogs(logs);
+        return i;
     }
     @RequestMapping("addBug.html")
     public String pageAddBug(){

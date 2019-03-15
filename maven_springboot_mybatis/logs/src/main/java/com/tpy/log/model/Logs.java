@@ -10,6 +10,15 @@ public class Logs implements Serializable {
     private String userName;
     private Date createTime;
     private String filePath;
+    private String clickRcte;
+
+    public String getClickRcte() {
+        return clickRcte;
+    }
+
+    public void setClickRcte(String clickRcte) {
+        this.clickRcte = clickRcte;
+    }
 
     public String getFilePath() {
         return filePath;

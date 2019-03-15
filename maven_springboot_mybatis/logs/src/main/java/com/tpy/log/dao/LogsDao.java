@@ -38,7 +38,7 @@ public interface LogsDao {
      * @param log
      * @return
      */
-    @Insert("insert into bugs(bname,bcontext,userName,filePath) values(#{bname},#{bcontext},#{userName},#{filePath})")
+    @Insert("insert into bugs(bname,bcontext,userName,filePath,clickRcte) values(#{bname},#{bcontext},#{userName},#{filePath},#{clickRcte})")
     @Options(useGeneratedKeys = true,keyProperty = "bid")
     public int addLogs(Logs log);
 
@@ -57,4 +57,12 @@ public interface LogsDao {
      */
     @Delete("delete from bugs where bid=#{bid}")
     public int delete(Logs logs);
+
+    /**
+     *
+     * @param logs
+     * @return
+     */
+    @Update("update bugs set clickRcte=#{clickRcte} where bid=#{bid}")
+    public int updateclickRcte(Logs logs);
 }

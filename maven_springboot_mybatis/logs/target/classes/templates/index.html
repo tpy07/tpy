@@ -80,8 +80,8 @@
                 <article class="post" th:each="logs:${logs}">
                     <header>
                         <h2 ><a th:href="@{/logs/selectByBid(bid=${logs.bid})}" th:text="${logs.bname}"></a></h2>
-                        <p class="postinfo"><span th:text="${logs.userName}"></span>| <time th:text="${#dates.format(logs.createTime,'yyyy-MM-dd')}"></time>
-                            <span   th:if="${logs.userName} eq ${session.uname}">|<button th:name="${logs.bid}" th:onclick="'javascript:del(this);'"  style="border: none; background-color: #F7F5F0;font-size:1.1em;">删除</button></span>
+                        <p class="postinfo">用户:<span th:text="${logs.userName}"></span>&nbsp;|&nbsp;发布时间:<time th:text="${#dates.format(logs.createTime,'yyyy-MM-dd HH:mm')}"></time>&nbsp;|&nbsp;点击量:<span th:text="${logs.clickRcte}"></span>
+                            <span   th:if="${logs.userName} eq ${session.uname}">&nbsp;|&nbsp;操作:<button th:name="${logs.bid}" th:onclick="'javascript:del(this);'"  style="border: none; background-color: #F7F5F0;font-size:1.1em;">删除</button></span>
                         </p>
                     </header>
                     <section class="entry">
@@ -98,7 +98,7 @@
                     <!--<span id="index" th:each="i : ${#numbers.sequence(testpage.beginPage,testpage.endPage)}">-->
                        <!--&lt;!&ndash; <a th:if="${type}==1" th:text="${i}" th:href="@{/logs/selectByBname(pages=${i})}"></a>-->
                     <a  th:each="i : *{#numbers.sequence(beginPage,endPage)}" th:if="${type}==0 and ${i}>0" th:text="${i}" th:href="@{/logs/querAll(pages=${i})}"></a>
-                   <a  th:each="i : *{#numbers.sequence(beginPage,endPage)}" th:if="${type}==1 and ${i}>0" th:text="${i}" th:href="@{/logs/selectByBname(pages=${i},context='')}"></a>
+                   <a  th:each="i : *{#numbers.sequence(beginPage,endPage)}" th:if="${type}==1 and ${i}>0" th:text="${i}" th:href="@{/logs/selectByBname(pages=${i},context=${context})}"></a>
                     <!--</span>-->
                 </div>
                 <div class="clear"></div>

@@ -9,7 +9,7 @@ public class Users  {
     private String password;
     private String sex;
     private String city;
-    private Date createTime;
+    private String createTime;
 
     public String getUid() {
         return uid;
@@ -51,11 +51,11 @@ public class Users  {
         this.city = city;
     }
 
-    public Date getCreateTime() {
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
     }
 }
